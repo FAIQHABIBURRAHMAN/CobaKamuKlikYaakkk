@@ -1,0 +1,1886 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mau Jalan? 👀</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(
+                135deg,
+                #ffd6e3,
+                #fff0f5,
+                #ffe3ed
+            );
+
+            background-size: 300% 300%;
+            animation: backgroundMove 8s ease infinite;
+
+            overflow: hidden;
+        }
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .card {
+            width: 90%;
+            max-width: 430px;
+
+            background: rgba(255, 255, 255, 0.92);
+
+            padding: 48px 32px;
+
+            border-radius:
+                63% 37% 54% 46% /
+                43% 37% 63% 57%;
+
+            text-align: center;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.12);
+
+            position: relative;
+            z-index: 5;
+
+            backdrop-filter: blur(10px);
+
+            animation:
+                blobMorph 10s
+                ease-in-out infinite;
+        }
+
+        .emoji {
+            font-size: 65px;
+            margin-bottom: 15px;
+
+            animation:
+                float 2s ease-in-out infinite;
+        }
+
+        h1 {
+            font-size: 30px;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: #777;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            gap: 15px;
+
+            position: relative;
+            min-height: 50px;
+        }
+
+        button {
+            border: none;
+
+            padding: 14px 25px;
+
+            border-radius: 30px;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+        #yes {
+            background: #ff5c8a;
+            color: white;
+
+            box-shadow:
+                0 7px 20px rgba(255, 92, 138, 0.3);
+        }
+
+        #yes:hover {
+            transform: scale(1.08);
+
+            background: #ff477b;
+        }
+
+        #no {
+            background: #eee;
+            color: #555;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .slide-in {
+            animation:
+                slideUp 1s
+                cubic-bezier(.17, .67, .35, 1.2),
+                blobMorph 10s
+                ease-in-out infinite;
+        }
+
+        /* =========================
+           INPUT NAMA
+        ========================= */
+
+        .name-input {
+            width: 100%;
+
+            padding: 14px 20px;
+
+            border-radius: 30px;
+
+            border: 2px solid #ffd6e3;
+
+            font-size: 15px;
+
+            color: #444;
+
+            outline: none;
+
+            margin-bottom: 22px;
+
+            text-align: center;
+
+            transition: 0.25s;
+
+            background: #fff8fa;
+        }
+
+        .name-input::placeholder {
+            color: #c9a8b3;
+        }
+
+        .name-input:focus {
+            border-color: #ff5c8a;
+
+            box-shadow:
+                0 0 0 4px rgba(255, 92, 138, 0.15);
+        }
+
+        #enter {
+            background: #ff5c8a;
+            color: white;
+
+            width: 100%;
+
+            box-shadow:
+                0 7px 20px rgba(255, 92, 138, 0.3);
+        }
+
+        #enter:hover {
+            transform: scale(1.03);
+
+            background: #ff477b;
+        }
+
+        #share {
+            background: #25d366;
+            color: white;
+
+            box-shadow:
+                0 7px 20px rgba(37, 211, 102, 0.3);
+        }
+
+        #share:hover {
+            transform: scale(1.05);
+
+            background: #1ebe5b;
+        }
+
+        /* =========================
+           SLIDE 2
+        ========================= */
+
+        .success {
+            animation:
+                slideUp 1s
+                cubic-bezier(.17, .67, .35, 1.2),
+                glowPulse 2.5s ease-in-out 1s infinite,
+                blobMorph 10s
+                ease-in-out infinite;
+
+            position: relative;
+
+            overflow: visible;
+        }
+
+        .success::before {
+            content: "";
+
+            position: absolute;
+
+            inset: -4px;
+
+            border-radius: inherit;
+
+            padding: 4px;
+
+            background: conic-gradient(
+                from 0deg,
+                #ff5c8a,
+                #ffd166,
+                #ff9ecf,
+                #ff5c8a
+            );
+
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+
+            -webkit-mask-composite: xor;
+
+            mask-composite: exclude;
+
+            opacity: 0;
+
+            animation:
+                borderRotate 3s linear infinite,
+                borderFadeIn 0.6s ease 1s forwards;
+
+            z-index: -1;
+
+            pointer-events: none;
+        }
+
+        .success .emoji {
+            display: inline-block;
+
+            position: relative;
+            z-index: 2;
+
+            filter:
+                drop-shadow(0 6px 14px rgba(255, 92, 138, 0.45));
+
+            animation:
+                celebration 1.2s ease,
+                wiggle 2.2s ease-in-out 1.2s infinite;
+        }
+
+        .success h1 {
+            position: relative;
+            z-index: 2;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ff5c8a,
+                    #ffb199,
+                    #ff5c8a
+                );
+
+            background-size: 200% auto;
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            animation:
+                textPop 0.8s ease 0.2s both,
+                shine 2.5s linear 1s infinite;
+        }
+
+        .success p {
+            position: relative;
+            z-index: 2;
+
+            animation:
+                textPop 0.8s ease 0.4s both;
+        }
+
+        .details {
+            position: relative;
+            z-index: 2;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff0f5,
+                    #ffe3ed
+                );
+
+            padding: 18px;
+
+            border-radius: 18px;
+
+            margin-top: 20px;
+
+            color: #555;
+
+            line-height: 1.9;
+
+            text-align: left;
+
+            box-shadow:
+                0 8px 25px rgba(255, 100, 150, 0.12);
+        }
+
+        .detail-item {
+            opacity: 0;
+
+            animation:
+                detailAppear 0.6s ease both;
+        }
+
+        .detail-item:nth-child(1) {
+            animation-delay: 0.6s;
+        }
+
+        .detail-item:nth-child(2) {
+            animation-delay: 0.85s;
+        }
+
+        .detail-item:nth-child(3) {
+            animation-delay: 1.1s;
+        }
+
+        .success b {
+            color: #ff4f82;
+        }
+
+        .love-burst {
+            position: fixed;
+
+            inset: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: min(70vw, 70vh);
+
+            line-height: 1;
+
+            z-index: 25;
+
+            pointer-events: none;
+
+            opacity: 0;
+
+            filter:
+                drop-shadow(0 10px 40px rgba(255, 92, 138, 0.5));
+
+            animation:
+                loveBurst 1.6s
+                cubic-bezier(.19, 1, .22, 1)
+                forwards;
+        }
+
+        /* =========================
+           SPARKLE
+        ========================= */
+
+        .sparkle {
+            position: fixed;
+
+            top: -20px;
+
+            pointer-events: none;
+
+            z-index: 15;
+
+            animation:
+                sparkleFall linear forwards;
+        }
+
+        /* =========================
+           KEMBANG API
+        ========================= */
+
+        .firework {
+            position: fixed;
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            z-index: 22;
+
+            box-shadow:
+                0 0 8px 1px currentColor;
+
+            animation:
+                fireworkParticle
+                900ms ease-out forwards;
+        }
+
+        /* =========================
+           BALON
+        ========================= */
+
+        .balloon {
+            position: fixed;
+
+            bottom: -80px;
+
+            pointer-events: none;
+
+            z-index: 14;
+
+            filter:
+                drop-shadow(0 6px 10px rgba(0, 0, 0, 0.15));
+
+            animation:
+                balloonRise linear forwards;
+        }
+
+        /* =========================
+           HEART
+        ========================= */
+
+        .heart {
+            position: fixed;
+
+            top: -30px;
+
+            pointer-events: none;
+
+            z-index: 10;
+
+            animation:
+                heartFall linear forwards;
+        }
+
+        /* =========================
+           CONFETTI
+        ========================= */
+
+        .confetti {
+            position: fixed;
+
+            width: 8px;
+            height: 14px;
+
+            top: -20px;
+
+            z-index: 20;
+
+            animation:
+                confettiFall linear forwards;
+        }
+
+        /* =========================
+           ANIMATIONS
+        ========================= */
+
+        @keyframes backgroundMove {
+
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Bentuk card berubah organik pelan-pelan */
+
+        @keyframes blobMorph {
+
+            0%, 100% {
+                border-radius:
+                    63% 37% 54% 46% /
+                    43% 37% 63% 57%;
+            }
+
+            25% {
+                border-radius:
+                    46% 54% 38% 62% /
+                    60% 42% 58% 40%;
+            }
+
+            50% {
+                border-radius:
+                    54% 46% 62% 38% /
+                    36% 60% 40% 64%;
+            }
+
+            75% {
+                border-radius:
+                    38% 62% 46% 54% /
+                    58% 44% 56% 42%;
+            }
+        }
+
+        /* Slide pertama keluar */
+
+        @keyframes slideOut {
+
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform:
+                    scale(0.7)
+                    translateY(-50px);
+            }
+        }
+
+        /* Slide kedua masuk */
+
+        @keyframes slideUp {
+
+            0% {
+                opacity: 0;
+
+                transform:
+                    translateY(120px)
+                    scale(0.7);
+            }
+
+            70% {
+                transform:
+                    translateY(-15px)
+                    scale(1.03);
+            }
+
+            100% {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+        /* Emoji */
+
+        @keyframes celebration {
+
+            0% {
+                transform:
+                    scale(0)
+                    rotate(-20deg);
+            }
+
+            50% {
+                transform:
+                    scale(1.3)
+                    rotate(10deg);
+            }
+
+            70% {
+                transform:
+                    scale(0.9)
+                    rotate(-5deg);
+            }
+
+            100% {
+                transform:
+                    scale(1)
+                    rotate(0);
+            }
+        }
+
+        /* Text */
+
+        @keyframes textPop {
+
+            0% {
+                opacity: 0;
+
+                transform:
+                    translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+        /* Detail */
+
+        @keyframes detailAppear {
+
+            0% {
+                opacity: 0;
+
+                transform:
+                    translateX(-15px)
+                    scale(0.95);
+            }
+
+            100% {
+                opacity: 1;
+
+                transform:
+                    translateX(0)
+                    scale(1);
+            }
+        }
+
+        /* Emoji goyang santai setelah muncul */
+
+        @keyframes wiggle {
+
+            0%, 100% {
+                transform:
+                    rotate(0deg)
+                    scale(1);
+            }
+
+            20% {
+                transform:
+                    rotate(-8deg)
+                    scale(1.05);
+            }
+
+            40% {
+                transform:
+                    rotate(8deg)
+                    scale(1.05);
+            }
+
+            60% {
+                transform:
+                    rotate(-4deg)
+                    scale(1);
+            }
+
+            80% {
+                transform:
+                    rotate(4deg)
+                    scale(1);
+            }
+        }
+
+        /* Card berdenyut pelan */
+
+        @keyframes glowPulse {
+
+            0%, 100% {
+                box-shadow:
+                    0 20px 60px rgba(0, 0, 0, 0.12),
+                    0 0 0 rgba(255, 92, 138, 0);
+            }
+
+            50% {
+                box-shadow:
+                    0 20px 60px rgba(0, 0, 0, 0.12),
+                    0 0 45px rgba(255, 92, 138, 0.35);
+            }
+        }
+
+        /* Border pelangi berputar */
+
+        @keyframes borderRotate {
+
+            0% {
+                background:
+                    conic-gradient(
+                        from 0deg,
+                        #ff5c8a,
+                        #ffd166,
+                        #ff9ecf,
+                        #ff5c8a
+                    );
+            }
+
+            100% {
+                background:
+                    conic-gradient(
+                        from 360deg,
+                        #ff5c8a,
+                        #ffd166,
+                        #ff9ecf,
+                        #ff5c8a
+                    );
+            }
+        }
+
+        @keyframes borderFadeIn {
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Teks judul berkilau */
+
+        @keyframes shine {
+
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        /* Sparkle */
+
+        @keyframes sparkleFall {
+
+            0% {
+                transform:
+                    translateY(0)
+                    rotate(0deg)
+                    scale(0);
+
+                opacity: 0;
+            }
+
+            15% {
+                transform:
+                    translateY(10vh)
+                    rotate(60deg)
+                    scale(1);
+
+                opacity: 1;
+            }
+
+            100% {
+                transform:
+                    translateY(105vh)
+                    rotate(300deg)
+                    scale(0.6);
+
+                opacity: 0;
+            }
+        }
+
+        /* Kembang api meletup */
+
+        @keyframes fireworkParticle {
+
+            0% {
+                transform:
+                    translate(0, 0)
+                    scale(1);
+
+                opacity: 1;
+            }
+
+            70% {
+                opacity: 1;
+            }
+
+            100% {
+                transform:
+                    translate(
+                        var(--tx),
+                        var(--ty)
+                    )
+                    scale(0.3);
+
+                opacity: 0;
+            }
+        }
+
+        /* Balon terbang naik */
+
+        @keyframes balloonRise {
+
+            0% {
+                transform:
+                    translateY(0)
+                    translateX(0)
+                    rotate(-3deg);
+
+                opacity: 1;
+            }
+
+            50% {
+                transform:
+                    translateY(-55vh)
+                    translateX(25px)
+                    rotate(3deg);
+            }
+
+            100% {
+                transform:
+                    translateY(-115vh)
+                    translateX(-15px)
+                    rotate(-3deg);
+
+                opacity: 0;
+            }
+        }
+
+        /* Emoji hati meledak memenuhi layar */
+
+        @keyframes loveBurst {
+
+            0% {
+                opacity: 0;
+
+                transform: scale(0.1);
+            }
+
+            35% {
+                opacity: 1;
+
+                transform: scale(1.05);
+            }
+
+            50% {
+                transform: scale(0.95);
+            }
+
+            65% {
+                opacity: 1;
+
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0;
+
+                transform: scale(1.3);
+            }
+        }
+
+        /* Heart */
+
+        @keyframes heartFall {
+
+            0% {
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+
+                opacity: 1;
+            }
+
+            100% {
+                transform:
+                    translateY(110vh)
+                    rotate(360deg);
+
+                opacity: 0;
+            }
+        }
+
+        /* Confetti */
+
+        @keyframes confettiFall {
+
+            0% {
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+
+                opacity: 1;
+            }
+
+            100% {
+                transform:
+                    translateY(110vh)
+                    rotate(720deg);
+
+                opacity: 0;
+            }
+        }
+
+        /* =========================
+           HP
+        ========================= */
+
+        @media (max-width: 400px) {
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         SLIDE 1 — MASUK NAMA
+    ========================= -->
+
+    <div class="card" id="entry">
+
+        <div class="emoji">
+            💌
+        </div>
+
+        <h1>
+            Hai, siapa nih?
+        </h1>
+
+        <p>
+            Sebelum lanjut, kenalan
+            dulu yuk~
+        </p>
+
+        <input
+            type="text"
+            id="nameInput"
+            class="name-input"
+            placeholder="Nama kamu..."
+            maxlength="20"
+        >
+
+        <div class="buttons">
+
+            <button id="enter" onclick="enterName()">
+                MASUK 🚪
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         SLIDE 2 — PERTANYAAN
+    ========================= -->
+
+    <div class="card hidden" id="question">
+
+        <div class="emoji">
+            👀
+        </div>
+
+        <h1>
+            Eh, <span id="nameSlot1">kamu</span>...
+        </h1>
+
+        <p>
+            Aku punya satu pertanyaan penting.<br>
+            Dan kayaknya kamu nggak boleh kabur
+            sebelum jawab 😭
+        </p>
+
+        <h1 style="font-size: 24px;">
+            Mau jalan bareng aku?
+        </h1>
+
+        <p style="margin-top: 10px;">
+            Tenang, cuma jalan.
+            Bukan sidang skripsi.
+        </p>
+
+        <div class="buttons">
+
+            <button id="yes" onclick="sayYes()">
+                MAU 😎
+            </button>
+
+            <button id="no">
+                NANTI DULU
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         SLIDE 3 — SUKSES
+    ========================= -->
+
+    <div class="card success hidden" id="success">
+
+        <div class="emoji">
+            😎❤️
+        </div>
+
+        <h1>
+            YESS!
+        </h1>
+
+        <p>
+            Berarti fix yaa, <span id="nameSlot2">kamu</span> 😭<br>
+            Kalo Mau On Cam sambil.
+        </p>
+
+        <div class="details">
+
+            <div class="detail-item">
+                📅 <b>Hari:</b>
+                MINGGU
+            </div>
+
+            <div class="detail-item">
+                📍 <b>Tempat:</b>
+                Kamu mau ke mana?
+            </div>
+
+            <div class="detail-item">
+                🍜 <b>Agenda:</b>
+                Jalan + makan + ngobrol
+            </div>
+
+        </div>
+
+        <p style="margin-top: 20px; margin-bottom: 0;">
+            <b>See you! 👋</b>
+        </p>
+
+        <div class="buttons" style="margin-top: 20px;">
+
+            <button id="share" onclick="shareWhatsApp()">
+                Bagikan ke WhatsApp 💬
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        /*
+         * EFEK SUARA CHIME
+         */
+
+        function playChime() {
+
+            try {
+
+                const AudioCtx =
+                    window.AudioContext ||
+                    window.webkitAudioContext;
+
+                const ctx =
+                    new AudioCtx();
+
+
+                const notes =
+                    [523.25, 659.25, 783.99];
+
+
+                notes.forEach(
+                    (freq, i) => {
+
+                        const osc =
+                            ctx.createOscillator();
+
+                        const gain =
+                            ctx.createGain();
+
+
+                        osc.type = "sine";
+
+                        osc.frequency.value =
+                            freq;
+
+
+                        const startTime =
+                            ctx.currentTime +
+                            i * 0.12;
+
+
+                        gain.gain.setValueAtTime(
+                            0.0001,
+                            startTime
+                        );
+
+                        gain.gain.exponentialRampToValueAtTime(
+                            0.15,
+                            startTime + 0.02
+                        );
+
+                        gain.gain.exponentialRampToValueAtTime(
+                            0.0001,
+                            startTime + 0.5
+                        );
+
+
+                        osc.connect(gain);
+
+                        gain.connect(
+                            ctx.destination
+                        );
+
+
+                        osc.start(startTime);
+
+                        osc.stop(
+                            startTime + 0.5
+                        );
+                    }
+                );
+
+            } catch (err) {
+
+                /*
+                 * Browser tidak mendukung
+                 * Web Audio API, lewati saja
+                 */
+            }
+        }
+
+
+        /*
+         * MASUK NAMA
+         */
+
+        const nameInput =
+            document.getElementById(
+                "nameInput"
+            );
+
+        let enteredName = "kamu";
+
+
+        /*
+         * Muat nama tersimpan (kalau ada)
+         * dari kunjungan sebelumnya
+         */
+
+        try {
+
+            const savedName =
+                localStorage.getItem(
+                    "mauJalanName"
+                );
+
+            if (savedName) {
+
+                nameInput.value =
+                    savedName;
+            }
+
+        } catch (err) {
+
+            /*
+             * localStorage tidak tersedia,
+             * lewati saja
+             */
+        }
+
+
+        nameInput.addEventListener(
+            "keydown",
+            (e) => {
+
+                if (e.key === "Enter") {
+
+                    enterName();
+                }
+            }
+        );
+
+
+        function enterName() {
+
+            const entry =
+                document.getElementById(
+                    "entry"
+                );
+
+            const question =
+                document.getElementById(
+                    "question"
+                );
+
+
+            let name =
+                nameInput.value.trim();
+
+            if (name === "") {
+
+                name = "kamu";
+            }
+
+
+            enteredName = name;
+
+
+            try {
+
+                localStorage.setItem(
+                    "mauJalanName",
+                    name
+                );
+
+            } catch (err) {
+
+                /*
+                 * localStorage tidak tersedia,
+                 * lewati saja
+                 */
+            }
+
+
+            document.getElementById(
+                "nameSlot1"
+            ).textContent = name;
+
+
+            document.getElementById(
+                "nameSlot2"
+            ).textContent = name;
+
+
+            /*
+             * Slide nama keluar
+             */
+
+            entry.style.animation =
+                "slideOut 0.5s ease forwards";
+
+
+            setTimeout(() => {
+
+                entry.classList.add(
+                    "hidden"
+                );
+
+
+                question.classList.remove(
+                    "hidden"
+                );
+
+                question.classList.add(
+                    "slide-in"
+                );
+
+            }, 400);
+        }
+
+
+        /*
+         * BAGIKAN KE WHATSAPP
+         */
+
+        function shareWhatsApp() {
+
+            const message =
+                `Yay, ${enteredName} bilang MAU jalan! 🎉 ` +
+                `Yuk atur hari, tempat, dan agendanya~`;
+
+            const url =
+                "https://wa.me/?text=" +
+                encodeURIComponent(message);
+
+
+            window.open(url, "_blank");
+        }
+
+
+        /*
+         * TOMBOL NANTI DULU
+         */
+
+        const noButton =
+            document.getElementById("no");
+
+
+        noButton.addEventListener(
+            "mouseover",
+            moveButton
+        );
+
+
+        noButton.addEventListener(
+            "touchstart",
+            moveButton
+        );
+
+
+        function moveButton() {
+
+            const maxX =
+                window.innerWidth -
+                noButton.offsetWidth -
+                20;
+
+            const maxY =
+                window.innerHeight -
+                noButton.offsetHeight -
+                20;
+
+
+            const x =
+                Math.random() * maxX;
+
+            const y =
+                Math.random() * maxY;
+
+
+            noButton.style.position =
+                "fixed";
+
+            noButton.style.left =
+                x + "px";
+
+            noButton.style.top =
+                y + "px";
+        }
+
+
+        /*
+         * KLIK MAU
+         */
+
+        function sayYes() {
+
+            const question =
+                document.getElementById(
+                    "question"
+                );
+
+            const success =
+                document.getElementById(
+                    "success"
+                );
+
+
+            /*
+             * Slide pertama keluar
+             */
+
+            question.style.animation =
+                "slideOut 0.5s ease forwards";
+
+
+            setTimeout(() => {
+
+                question.classList.add(
+                    "hidden"
+                );
+
+
+                success.classList.remove(
+                    "hidden"
+                );
+
+
+                /*
+                 * Jalankan efek
+                 */
+
+                playChime();
+
+                createLoveBurst();
+
+                createHearts();
+
+                createConfetti();
+
+                createSparkles();
+
+                createBalloons(3);
+
+
+                setTimeout(
+                    fireworkBurstRandom,
+                    300
+                );
+
+
+                /*
+                 * Sparkle nongol berkala biar
+                 * slide kedua tetap hidup
+                 */
+
+                sparkleInterval = setInterval(
+                    createSparkles,
+                    1800
+                );
+
+
+                /*
+                 * Hati kecil terus melayang
+                 * pelan di background
+                 */
+
+                heartsInterval = setInterval(
+                    () => createHearts(6),
+                    1500
+                );
+
+
+                /*
+                 * Kembang api meletup berkala
+                 */
+
+                fireworkInterval = setInterval(
+                    fireworkBurstRandom,
+                    2200
+                );
+
+
+                /*
+                 * Balon terus terbang naik
+                 */
+
+                balloonInterval = setInterval(
+                    () => createBalloons(2),
+                    2200
+                );
+
+
+                /*
+                 * Semua efek berkelanjutan
+                 * berhenti otomatis setelah
+                 * 20 detik biar hemat baterai
+                 */
+
+                setTimeout(() => {
+
+                    clearInterval(
+                        sparkleInterval
+                    );
+
+                    clearInterval(
+                        heartsInterval
+                    );
+
+                    clearInterval(
+                        fireworkInterval
+                    );
+
+                    clearInterval(
+                        balloonInterval
+                    );
+
+                }, 20000);
+
+            }, 400);
+        }
+
+
+        let sparkleInterval = null;
+        let heartsInterval = null;
+        let fireworkInterval = null;
+        let balloonInterval = null;
+
+
+        /*
+         * HUJAN HATI
+         */
+
+        function createHearts(count = 35) {
+
+            for (let i = 0; i < count; i++) {
+
+                const heart =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                heart.className =
+                    "heart";
+
+
+                heart.innerHTML =
+                    Math.random() > 0.5
+                        ? "❤️"
+                        : "💗";
+
+
+                heart.style.left =
+                    Math.random() * 100 +
+                    "vw";
+
+
+                heart.style.animationDuration =
+                    (Math.random() * 3 + 2) +
+                    "s";
+
+
+                heart.style.animationDelay =
+                    Math.random() * 1.5 +
+                    "s";
+
+
+                heart.style.fontSize =
+                    (Math.random() * 18 + 14) +
+                    "px";
+
+
+                document.body.appendChild(
+                    heart
+                );
+
+
+                setTimeout(() => {
+
+                    heart.remove();
+
+                }, 6000);
+            }
+        }
+
+
+        /*
+         * CONFETTI
+         */
+
+        function createConfetti() {
+
+            for (let i = 0; i < 80; i++) {
+
+                const confetti =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                confetti.className =
+                    "confetti";
+
+
+                confetti.style.left =
+                    Math.random() * 100 +
+                    "vw";
+
+
+                confetti.style.background =
+                    `hsl(
+                        ${Math.random() * 360},
+                        80%,
+                        65%
+                    )`;
+
+
+                confetti.style.animationDuration =
+                    (Math.random() * 2 + 2) +
+                    "s";
+
+
+                confetti.style.animationDelay =
+                    Math.random() * 0.8 +
+                    "s";
+
+
+                document.body.appendChild(
+                    confetti
+                );
+
+
+                setTimeout(() => {
+
+                    confetti.remove();
+
+                }, 5000);
+            }
+        }
+
+
+        /*
+         * LOVE BURST (emoji hati
+         * memenuhi layar)
+         */
+
+        function createLoveBurst() {
+
+            const burst =
+                document.createElement(
+                    "div"
+                );
+
+
+            burst.className =
+                "love-burst";
+
+
+            burst.innerHTML =
+                "❤️";
+
+
+            document.body.appendChild(
+                burst
+            );
+
+
+            setTimeout(() => {
+
+                burst.remove();
+
+            }, 1700);
+        }
+
+
+        /*
+         * KEMBANG API
+         */
+
+        const fireworkColors = [
+            "#ff5c8a",
+            "#ffd166",
+            "#7bdff2",
+            "#b5f2b5",
+            "#c8a2ff"
+        ];
+
+
+        function createFirework(x, y) {
+
+            const count = 22;
+
+
+            for (let i = 0; i < count; i++) {
+
+                const particle =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                particle.className =
+                    "firework";
+
+
+                const angle =
+                    (i / count) *
+                    Math.PI * 2;
+
+                const distance =
+                    Math.random() * 40 + 55;
+
+                const tx =
+                    Math.cos(angle) *
+                    distance;
+
+                const ty =
+                    Math.sin(angle) *
+                    distance;
+
+
+                particle.style.left =
+                    x + "px";
+
+                particle.style.top =
+                    y + "px";
+
+                particle.style.setProperty(
+                    "--tx",
+                    tx + "px"
+                );
+
+                particle.style.setProperty(
+                    "--ty",
+                    ty + "px"
+                );
+
+                particle.style.color =
+                    fireworkColors[
+                        Math.floor(
+                            Math.random() *
+                            fireworkColors.length
+                        )
+                    ];
+
+                particle.style.background =
+                    particle.style.color;
+
+
+                document.body.appendChild(
+                    particle
+                );
+
+
+                setTimeout(() => {
+
+                    particle.remove();
+
+                }, 950);
+            }
+        }
+
+
+        function fireworkBurstRandom() {
+
+            const x =
+                Math.random() *
+                window.innerWidth * 0.7 +
+                window.innerWidth * 0.15;
+
+            const y =
+                Math.random() *
+                window.innerHeight * 0.35 +
+                window.innerHeight * 0.1;
+
+
+            createFirework(x, y);
+        }
+
+
+        /*
+         * BALON
+         */
+
+        function createBalloons(count = 2) {
+
+            const emojis =
+                ["🎈", "🎊"];
+
+
+            for (let i = 0; i < count; i++) {
+
+                const balloon =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                balloon.className =
+                    "balloon";
+
+
+                balloon.innerHTML =
+                    emojis[
+                        Math.floor(
+                            Math.random() *
+                            emojis.length
+                        )
+                    ];
+
+
+                balloon.style.left =
+                    Math.random() * 90 +
+                    "vw";
+
+
+                balloon.style.fontSize =
+                    (Math.random() * 20 + 34) +
+                    "px";
+
+
+                balloon.style.animationDuration =
+                    (Math.random() * 3 + 6) +
+                    "s";
+
+
+                document.body.appendChild(
+                    balloon
+                );
+
+
+                setTimeout(() => {
+
+                    balloon.remove();
+
+                }, 9500);
+            }
+        }
+
+
+        /*
+         * SPARKLE
+         */
+
+        function createSparkles() {
+
+            const symbols =
+                ["✨", "⭐", "💫"];
+
+
+            for (let i = 0; i < 14; i++) {
+
+                const sparkle =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                sparkle.className =
+                    "sparkle";
+
+
+                sparkle.innerHTML =
+                    symbols[
+                        Math.floor(
+                            Math.random() *
+                            symbols.length
+                        )
+                    ];
+
+
+                sparkle.style.left =
+                    Math.random() * 100 +
+                    "vw";
+
+
+                sparkle.style.fontSize =
+                    (Math.random() * 14 + 12) +
+                    "px";
+
+
+                sparkle.style.animationDuration =
+                    (Math.random() * 2 + 2.5) +
+                    "s";
+
+
+                sparkle.style.animationDelay =
+                    Math.random() * 0.6 +
+                    "s";
+
+
+                document.body.appendChild(
+                    sparkle
+                );
+
+
+                setTimeout(() => {
+
+                    sparkle.remove();
+
+                }, 5500);
+            }
+        }
+
+    </script>
+
+</body>
+</html>
